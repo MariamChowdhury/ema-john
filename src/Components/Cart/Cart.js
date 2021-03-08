@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Cart = (props) => {
   const cart = props.cart;
@@ -8,19 +9,17 @@ const Cart = (props) => {
     const product = cart[i];
     total = total + product.price;
   }
-  let shipping =0
-  if(total>35){
-    shipping=0;
+  let shipping = 0;
+  if (total > 35) {
+    shipping = 0;
+  } else if (total > 15) {
+    shipping = 4.99;
+  } else if (total > 0) {
+    shipping = 12.99;
   }
-  else if(total>15){
-    shipping=4.99;
-  }
-  else if(total>0){
-    shipping=12.99
-  }
-  let stringTax=(total/10).toFixed(2);
-  const tax=parseFloat(stringTax)
-  const grandTotal=(total+shipping+tax);
+  let stringTax = (total / 10).toFixed(2);
+  const tax = parseFloat(stringTax);
+  const grandTotal = (total + shipping + tax).toFixed(2);
 
   return (
     <div>
@@ -29,7 +28,11 @@ const Cart = (props) => {
       <p>Product Price:{total}</p>
       <p>Shipping cost:{shipping}</p>
       <p>Tax:{tax}</p>
-      <p>Total:{grandTotal}</p>
+      <p>Total:{parseFloat(grandTotal)}</p>
+      <br />
+      <Link to="/review">
+        <button className="button">Review Order</button>
+      </Link>
     </div>
   );
 };
