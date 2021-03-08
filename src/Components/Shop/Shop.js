@@ -13,16 +13,16 @@ const Shop = () => {
     // console.log(product);
     const newCart = [...cart, product];
     setCart(newCart);
-    const singleProduct= newCart.filter(pd=>pd.key===product.key)
-    const count=singleProduct.length;
-addToDatabaseCart(product.key,count);
+    const singleProduct = newCart.filter((pd) => pd.key === product.key);
+    const count = singleProduct.length;
+    addToDatabaseCart(product.key, count);
   };
   return (
     <div className="shop-container">
       <div className="product-container">
         {products.map((pd) => (
           <Product
-          key={pd.key}
+            key={pd.key}
             showAddToCart={true}
             handleAdd={handleAdd}
             product={pd}
