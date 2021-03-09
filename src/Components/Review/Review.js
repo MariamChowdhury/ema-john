@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import fakeData from "../../fakeData";
 import {
   getDatabaseCart,
+  processOrder,
   removeFromDatabaseCart,
 } from "../../utilities/databaseManager";
+import Cart from "../Cart/Cart";
 import ReviewItem from "../ReviewItem/ReviewItem";
-
+import Image from "../../images/giphy.gif";
 const Review = () => {
   const [cart, setCart] = useState([]);
   const handleRemoveProduct = (productKey) => {
@@ -16,6 +18,7 @@ const Review = () => {
     removeFromDatabaseCart(productKey);
     setCart(newCart);
   };
+
   useEffect(() => {
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart);
@@ -25,18 +28,37 @@ const Review = () => {
       return product;
     });
     setCart(cartProducts);
-    // console.log(cartProducts);
   }, []);
+  const [orderDone, setOrderDone] = useState(false);
+
+  const handlePlaceOrder = () => {
+    setOrderDone(true);
+    setCart([]);
+    processOrder();
+  };
+  let thankYou;
+  if (orderDone) {
+    thankYou = <img src={Image} alt="" />;
+  }
   return (
-    <div>
-      <h1>Cart Items: {cart.length}</h1>
-      {cart.map((cart) => (
-        <ReviewItem
-          handleRemoveProduct={handleRemoveProduct}
-          key={cart.key}
-          product={cart}
-        ></ReviewItem>
-      ))}
+    <div className="twin-container">
+      <div className="product-container">
+        {cart.map((cart) => (
+          <ReviewItem
+            handleRemoveProduct={handleRemoveProduct}
+            key={cart.key}
+            product={cart}
+          ></ReviewItem>
+        ))}
+        {thankYou}
+      </div>
+      <div className="cart-container">
+        <Cart cart={cart}>
+          <button onClick={handlePlaceOrder} className="button">
+            Place Order!
+          </button>
+        </Cart>
+      </div>
     </div>
   );
 };
