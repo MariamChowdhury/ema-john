@@ -13,17 +13,20 @@ function App() {
       <Header></Header>
       <Router>
         <Switch>
+          <Route exact path="/">
+            <Shop />
+          </Route>
           <Route path="/shop">
-            <Shop></Shop>
+            <Shop />
           </Route>
           <Route path="/review">
-            <Review></Review>
+            <Review />
           </Route>
           <Route path="/inventory">
-            <Inventory></Inventory>
+            <Inventory />
           </Route>
           <Route path="/product/:productKey">
-            <ProductDetail></ProductDetail>
+            <ProductDetail />
           </Route>
           <Route exact path="*">
             <h1>404 page not found!</h1>
